@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import {
     AppBar,
@@ -30,7 +30,7 @@ const navItems = [
 const Navbar = () => {
     const [mobileOpen, setMobileOpen] = useState(false);
     const [scrollDirection, setScrollDirection] = useState('up');
-    const [lastScrollY, setLastScrollY] = useState(0);
+    const lastScrollY = useRef(0);
     const location = useLocation();
 
     const trigger = useScrollTrigger({
@@ -44,26 +44,31 @@ const Navbar = () => {
 
     // Scroll direction detection
     useEffect(() => {
+        const SCROLL_THRESHOLD = 10;
+
         const handleScroll = () => {
             const currentScrollY = window.scrollY;
 
             // Don't hide if we're near the top
             if (currentScrollY < 10) {
                 setScrollDirection('up');
-                setLastScrollY(currentScrollY);
+                lastScrollY.current = currentScrollY;
                 return;
             }
 
-            // Determine scroll direction
-            if (currentScrollY > lastScrollY) {
-                // Scrolling down
-                setScrollDirection('down');
-            } else if (currentScrollY < lastScrollY) {
-                // Scrolling up
-                setScrollDirection('up');
-            }
+            // Determine scroll direction with threshold
+            const diff = currentScrollY - lastScrollY.current;
 
-            setLastScrollY(currentScrollY);
+            if (Math.abs(diff) > SCROLL_THRESHOLD) {
+                if (diff > 0) {
+                    // Scrolling down
+                    setScrollDirection('down');
+                } else {
+                    // Scrolling up
+                    setScrollDirection('up');
+                }
+                lastScrollY.current = currentScrollY;
+            }
         };
 
         window.addEventListener('scroll', handleScroll, { passive: true });
@@ -71,7 +76,7 @@ const Navbar = () => {
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
-    }, [lastScrollY]);
+    }, []);
 
     useEffect(() => {
         setMobileOpen(false);
