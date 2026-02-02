@@ -94,7 +94,7 @@ const faqs = [
     },
 ];
 
-const WhatWeDo = () => {
+const AboutUs = () => {
     return (
         <Box>
             {/* Hero Section */}
@@ -115,7 +115,7 @@ const WhatWeDo = () => {
                                 Our Approach
                             </Typography>
                             <Typography variant="h1" sx={{ fontSize: { xs: '2.5rem', md: '3.5rem' }, mt: 1, mb: 3 }}>
-                                What We Do
+                                About Us
                             </Typography>
                             <Typography variant="h6" sx={{ color: 'rgba(255,255,255,0.8)', fontWeight: 400 }}>
                                 We provide comprehensive tax, accounting, and advisory services tailored to Nigerian
@@ -318,4 +318,4 @@ const WhatWeDo = () => {
     );
 };
 
-export default WhatWeDo;
+export default AboutUs;

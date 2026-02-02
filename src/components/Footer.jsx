@@ -18,7 +18,7 @@ import company from '../config/company';
 
 const quickLinks = [
     { label: 'Home', path: '/' },
-    { label: 'What We Do', path: '/what-we-do' },
+    { label: 'About Us', path: '/what-we-do' },
     { label: 'Services', path: '/services' },
     { label: 'Contact', path: '/contact' },
 ];
